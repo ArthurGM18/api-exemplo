@@ -1,0 +1,18 @@
+services:
+  slate:
+    build: .
+    command: ["build"]
+    restart: always
+    volumes:
+      - "./build:/srv/slate/build"
+      - "./source:/srv/slate/source"
+  slate_serve:
+    image: slatedocs/slate
+    command: ["serve"]
+    restart: always
+    ports:
+      - "4567:4567"
+    volumes:
+      - "./source:/srv/slate/source"
+    depends_on:
+      - slate
